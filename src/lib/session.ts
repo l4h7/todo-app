@@ -27,49 +27,22 @@ export async function decrypt(session: string | undefined = '') {
     }
 }
 
-export async function getUsername() {
+export async function verifySession() {
     const session = (await cookies()).get('session')?.value
 
-    if(!session){
-        return redirect("/login")
-    }
-
-    const user = await prisma.$queryRaw`SELECT user_name, user_id from users INNER JOIN sessions on sessions.session_user_id = users.user_id WHERE sessions.session_id = ${session}`;
-    console.log(user[0].user_name)
-    if(!user[0]){
+    if (!session) {
         return null;
     }
-    return user[0];
-}
-
-export async function getSession() {
-    const session = (await cookies()).get('session')?.value
-
-    if(!session){
-        return null;
-    }
-    
-    /*const db_session = await prisma.sessions.findUnique({
-        where: {
-            session_id: session
-        }
-    })
-
-    if (!db_session) {
-        await deleteSession();
-        return null;
-    } */
 
     return session;
-
 }
+
 export async function createSession(userId: number) {
-    if (await getSession()) {
+    if (await verifySession()) {
         await deleteSession();
     }
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-    const uuid = randomUUID();
-    const session = await encrypt({ uuid })
+    const session = await encrypt({ userId })
     const cookieStore = await cookies()
 
     cookieStore.set('session', session, {
@@ -143,11 +116,20 @@ export async function deleteSession() {
     const cookieStore = await cookies()
     cookieStore.delete('session')
 
-    await prisma.sessions.delete({
+    const db_session = await prisma.sessions.findFirst({
+        where: {
+            session_id: session
+        }
+    })
+
+    if(!db_session){
+        return null;
+    }
+     await prisma.sessions.delete({
         where: {
             session_id: session,
         }
-    })
+    }) 
 
 
 }

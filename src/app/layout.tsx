@@ -1,6 +1,12 @@
 import Navbar from "../components/Navbar"
 import "./globals.css"
 
+import {Inter} from 'next/font/google'
+
+const inter = Inter({
+  subsets: ['latin']
+})
+
 export default function RootLayout({
   children,
 }: {
@@ -8,8 +14,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="de">
-      <body>
-        <header className="bg-gray-100 shadow-md mx-auto">
+      <body className={`${inter.className}`}>
+        <header className={`bg-gray-100 shadow-md mx-auto`}>
           <Navbar></Navbar>
         </header>
         <main className="container mx-auto p-10">

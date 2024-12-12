@@ -1,14 +1,11 @@
 
 import Link from "next/link";
 import LogoutForm from "./LogoutForm";
-import { getSession, getUsername } from "../lib/session";
+import { getUser } from "../lib/dal";
 
 export default  async function Navbar() {
-    const session =  await getSession();
-    let username; 
-    if(session){
-        username = await getUsername();
-    }
+const session = await getUser();
+
     return (
         <div className="navbar">
             <div className="flex-1">
@@ -16,19 +13,8 @@ export default  async function Navbar() {
             </div>
             <div className="flex-none">
                 <ul className="menu menu-horizontal px-1">
-                    {!session && <li><Link href="login">Login</Link></li>}
-                    {session && <li><LogoutForm></LogoutForm></li> }
-                    {!session && <li><Link href="register">Register</Link></li>} 
-                    {session && <li><a>{username.user_name}</a></li>}
-                    <li>
-                        <details>
-                            <summary>Parent</summary>
-                            <ul className="bg-base-100 rounded-t-none p-2">
-                                <li><a>Link 1</a></li>
-                                <li><a>Link 2</a></li>
-                            </ul>
-                        </details>
-                    </li>
+                    {!session.isLoggedIn && <li><Link href="login">Login</Link></li>}
+                   {session.isLoggedIn && <LogoutForm username={session.user?.user_name}></LogoutForm>} 
                 </ul>
             </div>
         </div>

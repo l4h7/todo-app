@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
-import { getSession } from "./lib/session";
+import { verifySession } from "./lib/session";
 
 export async function middleware(request) {
-    const protectedRoutes = ['/todo']
+    const protectedRoutes = ['/profile']
     const currentPath = request.nextUrl.pathname
     
     if(protectedRoutes.includes(currentPath)){
-        const session = await getSession()
+        //DB Abfrage ohne Prisma integrieren
+        const session = await verifySession()
         if(!session){
             return NextResponse.redirect(new URL('/login', request.url))
         }
@@ -15,5 +16,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-    matcher: ['/todo']
+    matcher: ['/profile']
 }

@@ -7,9 +7,52 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
-  user_name      String    @id @db.VarChar(45) 
-  user_password  String    @db.VarChar(255)
-  user_createdat DateTime? @db.Timestamp(0)
-  user_role      String?   @db.VarChar(45)
+model Users {
+  user_id        Int       @id @default(autoincrement())
+  user_name      String    @unique @db.VarChar(45)
+  user_password  String
+  user_createdat DateTime?
+  user_role      String?
+  user_cart      Carts[]
+}
+
+model Sessions {
+  session_id    String @id
+  session_user_id Int 
+  session_expiresAt DateTime
+}
+
+model Products {
+  product_id          Int              @id @default(autoincrement())
+  product_name        String
+  product_description String           @db.Text
+  product_price       Int //In Cent 
+  product_stock       Int
+  product_active      Boolean          @default(true)
+  product_order       OrdersProducts[]
+  product_cart        Carts[]
+}
+
+model Carts {
+  cart_id         Int      @id @default(autoincrement())
+  cart_user       Users    @relation(fields: [cart_user_id], references: [user_id])
+  cart_user_id    Int
+  cart_product    Products @relation(fields: [cart_product_id], references: [product_id])
+  cart_product_id Int
+  cart_qty        Int
+  cart_timestamp  DateTime
+}
+
+model Orders {
+  order_id      Int              @id @default(autoincrement())
+  order_product OrdersProducts[]
+}
+
+model OrdersProducts {
+  order         Orders   @relation(fields: [op_order_id], references: [order_id])
+  product       Products @relation(fields: [op_product_id], references: [product_id])
+  op_order_id   Int
+  op_product_id Int
+
+  @@id([op_order_id, op_product_id])
 }

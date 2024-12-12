@@ -2,6 +2,8 @@
 import prisma from "../lib/db"
 import bcrypt from "bcrypt";
 import { checkPassword } from "../lib/crypt"
+import { createSession, deleteSession } from "../lib/session";
+import { redirect } from "next/navigation";
 
 export const register = async function (prevState, formData: FormData) {
     const errors: { username?: string } = {}
@@ -59,9 +61,8 @@ export const login = async function (prevState, formData: FormData) {
         //todo: session setzen
         
         console.log(`Hallo ${user.user_name}!`)
-        return {
-            success: true
-        }
+        await createSession(user.user_id)
+        return redirect("/todo")
     }
 
     console.log(`Du kommst hier nicht rein.`)
@@ -71,5 +72,9 @@ export const login = async function (prevState, formData: FormData) {
         },
         success: false
     }
+}
+
+export const logout = async function () {
+    await deleteSession();
 }
 

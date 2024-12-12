@@ -1,7 +1,14 @@
 
 import Link from "next/link";
+import LogoutForm from "./LogoutForm";
+import { getSession, getUsername } from "../lib/session";
 
 export default  async function Navbar() {
+    const session =  await getSession();
+    let username; 
+    if(session){
+        username = await getUsername();
+    }
     return (
         <div className="navbar">
             <div className="flex-1">
@@ -9,8 +16,10 @@ export default  async function Navbar() {
             </div>
             <div className="flex-none">
                 <ul className="menu menu-horizontal px-1">
-                    <li><Link href="login">Login</Link></li>
-                    <li><Link href="register">Register</Link></li>
+                    {!session && <li><Link href="login">Login</Link></li>}
+                    {session && <li><LogoutForm></LogoutForm></li> }
+                    {!session && <li><Link href="register">Register</Link></li>} 
+                    {session && <li><a>{username.user_name}</a></li>}
                     <li>
                         <details>
                             <summary>Parent</summary>

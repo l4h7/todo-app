@@ -2,9 +2,7 @@ import { getCart, getCartTotal, sumCartQty } from "@/src/actions/cartController"
 import CartDropDown from "./CartDropDown"
 
 export default async function CartSymbol(props) {
-   
     const cartTotal = await getCartTotal(props.cartData);
-console.log(props.cartData)
     return (
         <div className="flex-none">
             <div className="dropdown dropdown-end">
@@ -25,7 +23,7 @@ console.log(props.cartData)
                         {props.cartData ? <span className="badge badge-sm indicator-item">{props.cartData?.length}</span> : ""}
                     </div>
                 </div>
-                <CartDropDown itemCount={props.cartData?.length} cartTotal={cartTotal}></CartDropDown>
+            {props.cartData?.length && <div><CartDropDown itemCount={props.cartData?.length} cartTotal={cartTotal}></CartDropDown></div>}
             </div>
         </div>
     )

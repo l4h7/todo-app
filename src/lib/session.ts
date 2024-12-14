@@ -2,8 +2,6 @@ import 'server-only'
 import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 import prisma from './db'
-import { redirect } from 'next/navigation'
-import { randomUUID } from 'crypto'
 
 const secretKey = process.env.SESSION_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)

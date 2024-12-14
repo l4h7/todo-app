@@ -23,7 +23,7 @@ export default async function CartSymbol(props) {
                         {props.cartData ? <span className="badge badge-sm indicator-item">{props.cartData?.length}</span> : ""}
                     </div>
                 </div>
-            {props.cartData?.length && <div><CartDropDown itemCount={props.cartData?.length} cartTotal={cartTotal}></CartDropDown></div>}
+                {props.cartData?.length && <div><CartDropDown itemCount={props.cartData?.length} cartTotal={cartTotal}></CartDropDown></div>}
             </div>
         </div>
     )

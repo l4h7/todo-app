@@ -1,9 +1,9 @@
 
 import Link from "next/link";
 import LogoutForm from "./LogoutForm";
-import { getUser } from "../lib/dal";
 import CartSymbol from "./Cart/CartSymbol";
 import { getCart } from "../actions/cartController";
+import { getUser } from "../actions/userController";
 
 export default async function Navbar() {
     const session = await getUser()

@@ -1,4 +1,5 @@
-import { getUser } from "@/src/lib/dal"
+import { getUser } from "@/src/actions/userController";
+
 
 
 export default async function Page() {

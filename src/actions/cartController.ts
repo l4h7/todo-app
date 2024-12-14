@@ -1,6 +1,7 @@
 "use server"
 import { cookies } from "next/headers"
 import prisma from "../lib/db"
+import { formatter } from "../lib/formats"
 
 interface CartItemData {
     product_id: number,
@@ -50,11 +51,7 @@ export const sumCartQty = async function (obj) {
 
 export const getCartTotal = async function (obj) {
     let total = 0;
-    const formatter = new Intl.NumberFormat('de-DE', {
-        style: 'currency',
-        currency: 'EUR',
-        trailingZeroDisplay: 'stripIfInteger'
-    })
+
     for (let index in obj) {
         const price = await prisma.$queryRaw`SELECT product_price FROM products WHERE product_id =${obj[index].product_id}`
         total += price[0].product_price * obj[index].qty

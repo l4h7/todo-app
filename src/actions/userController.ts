@@ -2,7 +2,7 @@
 import prisma from "../lib/db"
 import bcrypt from "bcrypt";
 import { checkPassword } from "../lib/crypt"
-import { createSession, deleteSession } from "../lib/session";
+import { createSession, deleteSession, verifySession } from "../lib/session";
 import { redirect, RedirectType } from "next/navigation";
 
 export const register = async function (prevState, formData: FormData) {
@@ -62,7 +62,6 @@ export const login = async function (prevState, formData: FormData) {
         return redirect("/profile")
     }
 
-    console.log(`Du kommst hier nicht rein.`)
     return {
         errors: {
             password: 'Falsches Passwort oder kein Konto. '
@@ -74,5 +73,16 @@ export const login = async function (prevState, formData: FormData) {
 export const logout = async function () {
     await deleteSession();
     redirect("/")
+}
+
+export async function getUser() {
+    const session = await verifySession();
+    const user = await prisma.$queryRaw`SELECT user_name, user_id, user_role from users INNER JOIN sessions on sessions.session_user_id = users.user_id WHERE sessions.session_id = ${session}`;
+    
+    if(!user[0]){
+        return {isLoggedIn: false, user: null}
+    }
+
+    return { isLoggedIn: true, user: user[0]};
 }
 

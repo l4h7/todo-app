@@ -115,6 +115,7 @@ export async function deleteSession() {
 
     const cookieStore = await cookies()
     cookieStore.delete('session')
+    
 
     const db_session = await prisma.sessions.findFirst({
         where: {
@@ -130,7 +131,7 @@ export async function deleteSession() {
             session_id: session,
         }
     }) 
-
-
+    return true;
 }
+
 

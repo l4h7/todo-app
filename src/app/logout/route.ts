@@ -3,5 +3,5 @@ import { redirect } from "next/navigation"
 
 
 export async function GET(request: Request) {
-    await deleteSession()
+    return Response.json(await deleteSession())
 }

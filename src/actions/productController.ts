@@ -4,7 +4,11 @@ import prisma from "../lib/db";
 import { isEmpty } from "../lib/formats";
 
 export async function getProducts() {
-    let res = await  prisma.products.findMany()
+    let res = await  prisma.products.findMany({
+        where:{
+            product_active: true
+        }
+    })
     //await new Promise((resolve) => setTimeout(resolve,1000))
     return res;
 }

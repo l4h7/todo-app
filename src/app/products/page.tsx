@@ -1,8 +1,6 @@
 "use server"
 import { getProducts } from "@/src/actions/productController"
 import ProductCard from "@/src/components/ProductCard"
-import prisma from "@/src/lib/db"
-import { Suspense } from "react"
 
 export default async function Page() {
     const products  = await getProducts()

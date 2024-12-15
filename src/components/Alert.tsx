@@ -1,3 +1,4 @@
+"use client"
 export default function Alert({type, children}) {
     return (
         <div role="alert" className={type == "warning" ? `alert alert-warning my-2` : `alert alert-success my-2`}>

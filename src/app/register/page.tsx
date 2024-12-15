@@ -4,7 +4,14 @@ import { useActionState } from "react";
 import Alert from "../../components/Alert";
 
 export default function Page() {
-  const [formState, formAction] = useActionState(register, {});
+  const initialState = {
+    errors:{
+      username: null,
+      password: null
+    },
+    success: null
+  }
+  const [formState, formAction, pending] = useActionState(register, {initialState});
 
   
   return (
@@ -19,7 +26,7 @@ export default function Page() {
           <input type="password" name="password" placeholder="Password" className="input input-bordered w-full max-w-sm" />
         </div>
         <div className="mb-3">
-          <button className="btn btn-primary">Registrieren</button>
+          <button disabled={pending} className="btn btn-primary">Registrieren</button>
         </div>
       </form>
     </>)

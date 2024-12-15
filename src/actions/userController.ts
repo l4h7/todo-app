@@ -5,7 +5,7 @@ import { checkPassword } from "../lib/crypt"
 import { createSession, deleteSession, verifySession } from "../lib/session";
 import { redirect, RedirectType } from "next/navigation";
 
-export const register = async function (prevState, formData: FormData) {
+export const register = async function (prevState,  formData: FormData) {
     const errors: { username?: string } = {}
     const saltRounds = 10
 
@@ -32,9 +32,7 @@ export const register = async function (prevState, formData: FormData) {
         }
     })
 
-    return {
-        success: true
-    }
+    return redirect("/login")
 }
 
 export const login = async function (prevState, formData: FormData) {
@@ -48,6 +46,7 @@ export const login = async function (prevState, formData: FormData) {
     })
 
     if (!user) {
+        console.log("NO USER")
         return {
             errors: {
                 password: 'Falsches Passwort oder kein Konto. '
@@ -58,6 +57,7 @@ export const login = async function (prevState, formData: FormData) {
 
     const matchingPassword = await checkPassword(password, user.user_password);
     if (matchingPassword) {
+        console.log("MATCHING PW")
         await createSession(user.user_id)
         return redirect("/profile")
     }
@@ -78,7 +78,6 @@ export const logout = async function () {
 export async function getUser() {
     const session = await verifySession();
     const user = await prisma.$queryRaw`SELECT user_name, user_id, user_role from users INNER JOIN sessions on sessions.session_user_id = users.user_id WHERE sessions.session_id = ${session}`;
-    
     if(!user[0]){
         return {isLoggedIn: false, user: null}
     }

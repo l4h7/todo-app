@@ -1,4 +1,5 @@
-import { getCart, getCartTotal, sumCartQty } from "@/src/actions/cartController"
+"use server"
+import { getCartTotal } from "@/src/actions/cartController"
 import CartDropDown from "./CartDropDown"
 
 export default async function CartSymbol(props) {

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { verifySession } from "./lib/session";
 
 export async function middleware(request) {
-    const protectedRoutes = ['/profile']
+    const protectedRoutes = ['/profile', '/admin', '/dashboard']
     const currentPath = request.nextUrl.pathname
     
     if(protectedRoutes.includes(currentPath)){
@@ -16,5 +16,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-    matcher: ['/profile']
+    matcher: ['/profile', '/admin', '/dashboard']
 }

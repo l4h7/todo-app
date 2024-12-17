@@ -14,11 +14,12 @@ model Users {
   user_createdat DateTime?
   user_role      String?
   user_cart      Carts[]
+  user_order     Orders[]
 }
 
 model Sessions {
-  session_id    String @id
-  session_user_id Int 
+  session_id        String   @id
+  session_user_id   Int
   session_expiresAt DateTime
 }
 
@@ -45,6 +46,8 @@ model Carts {
 
 model Orders {
   order_id      Int              @id @default(autoincrement())
+  order_user    Users            @relation(fields: [order_user_id], references: [user_id])
+  order_user_id Int
   order_product OrdersProducts[]
 }
 

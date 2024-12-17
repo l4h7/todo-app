@@ -27,8 +27,6 @@ export const addToCart = async function (prevState, formData: FormData) {
     }
 
     cookieStore.set('cart', JSON.stringify(cart));
-
-
 }
 
 export const getCart = async function () {
@@ -37,7 +35,6 @@ export const getCart = async function () {
     if (!cartData) {
         return null
     }
-
     return JSON.parse(cartData)
 }
 

@@ -9,12 +9,11 @@ import AdminLinks from "./AdminLinks";
 
 export default async function Navbar() {
     const session = await getUser()
-    const cartData = await getCart()
     return (
         <div className="navbar bg-base-100">
         <NavbarLinks></NavbarLinks>
             <div className="navbar-end">
-                <CartSymbol cartData={cartData}></CartSymbol>
+                <CartSymbol></CartSymbol>
                 <div className="flex-none">
                     <ul className="menu menu-horizontal px-1">
                         {!session.isLoggedIn && <li><Link href="login">Login</Link></li>}

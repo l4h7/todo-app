@@ -21,6 +21,7 @@ model Sessions {
   session_id        String   @id
   session_user_id   Int
   session_expiresAt DateTime
+  session_order     Orders[]
 }
 
 model Products {
@@ -45,10 +46,12 @@ model Carts {
 }
 
 model Orders {
-  order_id      Int              @id @default(autoincrement())
-  order_user    Users            @relation(fields: [order_user_id], references: [user_id])
-  order_user_id Int
-  order_product OrdersProducts[]
+  order_id         Int              @id @default(autoincrement())
+  order_user       Users?            @relation(fields: [order_user_id], references: [user_id])
+  order_session    Sessions?         @relation(fields: [order_session_id], references: [session_id])
+  order_session_id String?
+  order_user_id    Int?
+  order_product    OrdersProducts[]
 }
 
 model OrdersProducts {
@@ -56,6 +59,7 @@ model OrdersProducts {
   product       Products @relation(fields: [op_product_id], references: [product_id])
   op_order_id   Int
   op_product_id Int
+  order_product_qty Int
 
   @@id([op_order_id, op_product_id])
 }

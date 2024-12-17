@@ -1,4 +1,7 @@
 "use server"
+
+import Link from "next/link"
+
 export default async function CartDropDown(props){
     return (
         <div
@@ -8,7 +11,7 @@ export default async function CartDropDown(props){
           <span className="text-lg font-bold">{props?.itemCount} Produkt{props?.itemCount > 1 ? "e" : ""}</span>
           <span className="text-blue-600">Preis: {props?.cartTotal}</span>
           <div className="card-actions">
-            <button className="btn btn-primary btn-block">Zum Warenkorb</button>
+            <Link href="/cart" className="btn btn-primary btn-block">Zum Warenkorb</Link>
           </div>
         </div>
       </div>

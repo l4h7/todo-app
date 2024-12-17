@@ -23,7 +23,7 @@ export default function ProductCard({ product }) {
                             <input
                                 type="number"
                                 defaultValue={1}
-                                max={10}
+                                max={parseInt(product.stock)}
                                 name="qty"
                                 className="input input-bordered w-20" />
                         </div>

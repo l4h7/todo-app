@@ -16,15 +16,43 @@ export async function getProducts() {
     return res;
 }
 
+export async function getProductsFromCart(cartData) {
+    let products = []
+
+    //cartData.map(p => console.log(p))
+    for (let i in cartData) {
+        const product = await prisma.products.findFirst({
+            where:{
+                product_id: cartData[i].product_id
+            },
+            select:{
+                product_id: true,
+                product_name: true,
+                product_description: true,
+                product_price: true
+            }
+        }) 
+        products.push({
+            product_id: product.product_id,
+            product_name: product.product_name,
+            product_description: product.product_description,
+            product_price: product.product_price,
+            product_qty: cartData[i].qty
+        });
+    }
+    return products
+}
+
+
 export async function deleteProduct(prevState, formData: FormData) {
     const session = await getUser();
-    if(session.user.user_role !== "admin"){
+    if (session.user.user_role !== "admin") {
         redirect("/login")
     }
     const product_id = parseInt(formData.get('product_id')?.toString())
-    if(product_id !== null){
+    if (product_id !== null) {
         await prisma.products.delete({
-            where:{
+            where: {
                 product_id: product_id
             }
         })
@@ -38,7 +66,7 @@ export async function deleteProduct(prevState, formData: FormData) {
 export async function addProduct(prevState, formData: FormData) {
 
     const session = await getUser();
-    if(session.user.user_role !== "admin"){
+    if (session.user.user_role !== "admin") {
         redirect("/login")
     }
 

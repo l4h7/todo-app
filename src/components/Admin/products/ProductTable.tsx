@@ -26,7 +26,7 @@ export default async function ProductTable({ products }) {
 
     return (
         <>
-            <Link href="/admin/add-product" className="btn btn-success text-white my-6">Neues Produkt anlegen</Link>
+            <Link href="/admin/add-product" className="btn btn-primary text-white my-6">Neues Produkt anlegen</Link>
             <div className="overflow-x-auto">
                 <table className="table table-sm">
                     <thead>

@@ -13,12 +13,15 @@ export default async function Page() {
 
     const products = await prisma.products.findMany();
 
-    
+
 
     return (
         <>
-            <h1 className="font-black text-3xl">Produkte hinzufügen oder bearbeiten</h1>
-            <ProductTable products={products}></ProductTable>
+            <div className="container mx-auto px-10">
+
+                <h1 className="font-black text-3xl mt-8">Produkte hinzufügen oder bearbeiten</h1>
+                <ProductTable products={products}></ProductTable>
+            </div>
         </>
     )
 }

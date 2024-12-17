@@ -1,9 +1,11 @@
 import ProductForm from "@/src/components/Admin/products/ProductForm";
 
-export default function Page(){
+export default function Page() {
     return (
         <>
-            <ProductForm></ProductForm>
+            <div className="container mx-auto px-10">
+                <ProductForm product={{}}></ProductForm>
+            </div>
         </>
     )
 }

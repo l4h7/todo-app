@@ -3,7 +3,7 @@
 import { addProduct } from "@/src/actions/productController";
 import { useActionState } from "react";
 import Alert from "../../Alert";
-import { formatter } from "@/src/lib/formats";
+import { formatter, isEmpty } from "@/src/lib/formats";
 import { useRouter } from "next/navigation";
 
 
@@ -15,11 +15,16 @@ export default function ProductForm({ product }) {
         success: null
     }
 
+    if(isEmpty(product)){
+        product = null
+    }
 
     const [formState, formAction, pending] = useActionState(addProduct, initialState)
 
     return (
-        <div className="mx-auto">
+        <div className="mx-auto  mt-8">
+                <h1 className="text-3xl font-black my-4">{product ? "Produkt bearbeiten" : "Produkt hinzufügen"}</h1>
+
             <form action={formAction}>
                 <div className="grid grid-cols-4 gap-4 text-gray-800">
                     <div className="col-span-4">
@@ -52,7 +57,7 @@ export default function ProductForm({ product }) {
                     </div>
                     <div className="col-span-4">
                         <input type="hidden" name="product_id" defaultValue={product?.product_id}></input>
-                        <button disabled={pending} className="btn btn-success text-lg text-white">{product ? "Ändern" : "Hinzufügen"}</button>
+                        <button disabled={pending} className="btn btn-primary text-lg text-white">{product ? "Ändern" : "Hinzufügen"}</button>
                         <button className="btn btn-warning m-4 px-6" onClick={() => router.back()}>Zurück</button>
                     </div>
                 </div>

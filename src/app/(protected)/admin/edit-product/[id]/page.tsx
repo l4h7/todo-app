@@ -18,8 +18,9 @@ export default async function Page({
 
     return (
         <>
-        <h1 className="text-3xl font-black mb-3">Produkt bearbeiten</h1>
-            <ProductForm product={product}></ProductForm>
+            <div className="container mx-auto px-10">
+                <ProductForm product={product}></ProductForm>
+            </div>
         </>
     )
 }

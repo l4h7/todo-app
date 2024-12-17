@@ -8,9 +8,9 @@ export default function Page() {
 
   return (
     <>
-      <h1 className="text-3xl font-black text-center">Anmelden</h1>
+      <h1 className="text-3xl font-black text-center mt-8">Anmelden</h1>
 
-      <form action={formAction} className="max-w-sm mx-auto py-6">
+      <form action={formAction} className="max-w-sm mx-auto p-10">
         <div className="mb-3">
           <input type="text" name="username" placeholder="Username" className="input input-bordered w-full max-w-sm" />
           {formState.errors?.username && (<Alert type="warning">{formState.errors?.username}</Alert>)}

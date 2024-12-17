@@ -26,7 +26,6 @@ export default function NavbarLinks() {
                     <ul
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                        <li><Link className={path === "/" ? "font-bold" : ""} href="/">Start</Link></li>
 
                         {/* <li>
                     <a>Parent</a>
@@ -39,11 +38,10 @@ export default function NavbarLinks() {
                         <li><Link className={path === "/sale" ? "font-bold" : ""} href="/">Sale</Link></li>
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-sm font-black sm:text-lg text-left">Shishapoint <br className="sm:hidden "></br> Bad Wildungen</a>
+                <a className="btn btn-ghost text-sm font-black sm:text-lg text-left" href="/">Shishapoint <br className="sm:hidden "></br> Bad Wildungen</a>
             </div>
             <div className="navbar-center hidden md:flex">
                 <ul className="menu menu-horizontal px-1">
-                    <li><Link className={path === "/" ? "font-bold" : ""} href="/">Start</Link></li>
                     {/* <li>
                     <a>Parent</a>
                     <ul className="p-2">

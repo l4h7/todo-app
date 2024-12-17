@@ -18,7 +18,7 @@ export async function getProducts() {
 
 export async function deleteProduct(prevState, formData: FormData) {
     const session = await getUser();
-    if(session.user.role !== "admin"){
+    if(session.user.user_role !== "admin"){
         redirect("/login")
     }
     const product_id = parseInt(formData.get('product_id')?.toString())
@@ -38,7 +38,7 @@ export async function deleteProduct(prevState, formData: FormData) {
 export async function addProduct(prevState, formData: FormData) {
 
     const session = await getUser();
-    if(session.user.role !== "admin"){
+    if(session.user.user_role !== "admin"){
         redirect("/login")
     }
 
